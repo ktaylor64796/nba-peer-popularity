@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>NBA's Most Popular Players</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+:root {
+  --bg-dark: #05060c;
+  --card-radius: 16px;
+  --text-main: #e9f4f1;
+  --accent: #42f5c5;
+  --gold: #ffcc33;
+
+  --panel: rgba(255,255,255,0.04);
+  --panel-border: rgba(255,255,255,0.08);
+  --shadow: 0 26px 70px rgba(0,0,0,0.55);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 70% -200px, rgba(16,63,58,0.90) 0%, transparent 60%),
+    radial-gradient(900px 520px at 10% 0%, rgba(11,26,58,0.90) 0%, transparent 55%),
+    radial-gradient(900px 560px at 85% 30%, rgba(66,245,197,0.12) 0%, transparent 55%),
+    var(--bg-dark);
+  color: var(--text-main);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.wrapper {
+  max-width: 1100px;
+  margin: 42px auto 60px;
+  padding: 0 22px;
+}
+
+h1 {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: 1px;
+  margin: 0 0 22px;
+  font-weight: 900;
+}
+h1 span { color: var(--accent); }
+
+.grid {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  padding: clamp(12px, 2vw, 18px);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(8px, 1.4vw, 14px);
+  padding: clamp(8px, 1.4vw, 12px);
+  border-radius: 18px;
+  margin-bottom: clamp(10px, 1.6vw, 14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.30);
+}
+
+.row-1{ background: linear-gradient(90deg, #1CFFC3 0%, #18D9B1 45%, #13B89A 100%); }
+.row-2 { background: linear-gradient(90deg, #1bb4ff, #165c9e); }
+.row-3 { background: linear-gradient(90deg, #174f8a, #0f355f); }
+.row-4 { background: linear-gradient(90deg, #0f2b45, #091c30); }
+.row-5 { background: linear-gradient(90deg, #0b1320, #05080f); }
+
+.card {
+  background: rgba(0,0,0,0.35);
+  border-radius: var(--card-radius);
+  padding: clamp(10px, 1.4vw, 14px) clamp(8px, 1.2vw, 12px) clamp(12px, 1.6vw, 16px);
+  text-align: center;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.card.rank-1 {
+  box-shadow:
+    0 0 0 2px rgba(255,204,51,0.85),
+    0 0 28px rgba(255,204,51,0.24),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.rank {
+  position: absolute;
+  top: clamp(6px, 1vw, 10px);
+  right: clamp(6px, 1vw, 10px);
+  z-index: 2;
+  background: rgba(0,0,0,0.55);
+  padding: 3px 7px;
+  border-radius: 10px;
+  font-size: clamp(10px, 1.2vw, 12px);
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.avatar {
+  width: clamp(52px, 8.5vw, 92px);
+  height: clamp(52px, 8.5vw, 92px);
+  margin: 0 auto clamp(6px, 1vw, 10px);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.12), 0 10px 18px rgba(0,0,0,0.35);
+  background: rgba(0,0,0,0.25);
+}
+.avatar img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display:block;
+  transform: scale(1.03);
+}
+
+.name {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(11px, 1.25vw, 14px);
+  font-weight: 800;
+  margin: 0 0 4px;
+  line-height: 1.15;
+}
+
+.team {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(9px, 1.05vw, 11px);
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: rgba(233,244,241,0.72);
+  margin: 0;
+}
+
+.footer {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+}
+
+.footer img{
+  height: 50px;
+  margin-top: 12px;
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>NBA’S MOST <span>POPULAR PLAYERS</span> Among Their Peers</h1>
+
+    <div class="grid">
+      <div class="grid-inner" id="grid"></div>
+
+      <div class="footer">
+        <div class="meta">
+          Ranked by # of NBA players who follow them on Instagram
+        </div>
+
+        <div class="meta" style="margin-top:6px;">
+          Source: Instagram, Headshots: ESPN
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const PLAYERS = [
+  { rank:1,  team:"Los Angeles Lakers",      name:"LeBron James",       espnId:1966 },
+  { rank:2,  team:"Phoenix Suns",           name:"Kevin Durant",       espnId:3202 },
+  { rank:3,  team:"Boston Celtics",         name:"Jayson Tatum",       espnId:4065648 },
+  { rank:4,  team:"Dallas Mavericks",       name:"Kyrie Irving",       espnId:6472 },
+  { rank:5,  team:"Cleveland Cavaliers",    name:"Donovan Mitchell",   espnId:3908809 },
+  { rank:6,  team:"Milwaukee Bucks",        name:"Damian Lillard",     espnId:6606 },
+  { rank:7,  team:"Golden State Warriors",  name:"Stephen Curry",      espnId:3975 },
+  { rank:8,  team:"Golden State Warriors",  name:"Chris Paul",         espnId:2779 },
+  { rank:9,  team:"Los Angeles Clippers",   name:"Russell Westbrook",  espnId:3460 },
+  { rank:10, team:"New Orleans Pelicans",   name:"CJ McCollum",        espnId:2490149 },
+  { rank:11, team:"Los Angeles Clippers",   name:"Bradley Beal",       espnId:6580 },
+  { rank:12, team:"Memphis Grizzlies",      name:"Jaren Jackson Jr",   espnId:4277961 },
+  { rank:13, team:"New Orleans Pelicans",   name:"Dejounte Murray",    espnId:3907497 },
+  { rank:14, team:"Orlando Magic",          name:"Cole Anthony",       espnId:4432809 },
+  { rank:15, team:"Philadelphia 76ers",     name:"Paul George",        espnId:4251 },
+  { rank:16, team:"Washington Wizards",     name:"Kyle Kuzma",         espnId:3134907 },
+  { rank:17, team:"Dallas Mavericks",       name:"Luka Doncic",        espnId:3945274 },
+  { rank:18, team:"Atlanta Hawks",          name:"Trae Young",         espnId:4277905 },
+  { rank:19, team:"Portland Trailblazers",  name:"Jrue Holiday",       espnId:3995 },
+  { rank:20, team:"Washington Wizards",     name:"Dangelo Russell",    espnId:3136776 },
+  { rank:21, team:"Charlotte Hornets",      name:"Miles Bridges",      espnId:4066383 },
+  { rank:22, team:"Indiana Pacers",         name:"Tyrese Haliburton",  espnId:4396993 },
+  { rank:23, team:"Toronto Raptors",        name:"Brandon Ingram",     espnId:3913176 },
+  { rank:24, team:"Phoenix Suns",           name:"Devin Booker",       espnId:3136193 },
+  { rank:25, team:"New York Knicks",        name:"Jordan Clarkson",    espnId:2528426 }
+];
+
+const FALLBACK =
+  `data:image/svg+xml;utf8,` +
+  encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+      <defs>
+        <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+          <stop stop-color="rgba(255,255,255,0.22)" offset="0"/>
+          <stop stop-color="rgba(255,255,255,0.06)" offset="1"/>
+        </linearGradient>
+      </defs>
+      <rect width="200" height="200" fill="rgba(0,0,0,0.22)"/>
+      <circle cx="100" cy="84" r="34" fill="url(#g)"/>
+      <path d="M30,190c8-42,36-64,70-64s62,22,70,64" fill="url(#g)"/>
+    </svg>
+`);
+
+function headshotUrl(id){
+  return `https://a.espncdn.com/i/headshots/nba/players/full/${id}.png`;
+}
+
+function rowClassForRank(rank){
+  if(rank <= 5) return "row-1";
+  if(rank <= 10) return "row-2";
+  if(rank <= 15) return "row-3";
+  if(rank <= 20) return "row-4";
+  return "row-5";
+}
+
+function render(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+
+  for(let r = 0; r < 5; r++){
+    const row = document.createElement("div");
+    row.className = `row ${rowClassForRank(r*5 + 1)}`;
+
+    const slice = PLAYERS.slice(r*5, r*5 + 5);
+    for(const p of slice){
+      const card = document.createElement("div");
+      card.className = `card ${p.rank === 1 ? "rank-1" : ""}`;
+
+      const badge = document.createElement("div");
+      badge.className = "rank";
+      badge.textContent = `#${p.rank}`;
+
+      const avatar = document.createElement("div");
+      avatar.className = "avatar";
+
+      const img = document.createElement("img");
+      img.alt = `${p.name} headshot`;
+      img.src = headshotUrl(p.espnId);
+      img.onerror = () => img.src = FALLBACK;
+      avatar.appendChild(img);
+
+      const name = document.createElement("div");
+      name.className = "name";
+      name.textContent = p.name;
+
+      const team = document.createElement("div");
+      team.className = "team";
+      team.textContent = p.team.toUpperCase();
+
+      card.appendChild(badge);
+      card.appendChild(avatar);
+      card.appendChild(name);
+      card.appendChild(team);
+
+      row.appendChild(card);
+    }
+
+    grid.appendChild(row);
+  }
+}
+
+render();
+</script>
+</body>
+</html>
