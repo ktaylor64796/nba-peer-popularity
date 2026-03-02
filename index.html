@@ -176,31 +176,31 @@ h1 span { color: var(--accent); }
 
 <script>
 const PLAYERS = [
-  { rank:1,  team:"Los Angeles Lakers",      name:"LeBron James",       espnId:1966 },
-  { rank:2,  team:"Phoenix Suns",           name:"Kevin Durant",       espnId:3202 },
-  { rank:3,  team:"Boston Celtics",         name:"Jayson Tatum",       espnId:4065648 },
-  { rank:4,  team:"Dallas Mavericks",       name:"Kyrie Irving",       espnId:6472 },
-  { rank:5,  team:"Cleveland Cavaliers",    name:"Donovan Mitchell",   espnId:3908809 },
-  { rank:6,  team:"Milwaukee Bucks",        name:"Damian Lillard",     espnId:6606 },
-  { rank:7,  team:"Golden State Warriors",  name:"Stephen Curry",      espnId:3975 },
-  { rank:8,  team:"Golden State Warriors",  name:"Chris Paul",         espnId:2779 },
-  { rank:9,  team:"Los Angeles Clippers",   name:"Russell Westbrook",  espnId:3460 },
-  { rank:10, team:"New Orleans Pelicans",   name:"CJ McCollum",        espnId:2490149 },
-  { rank:11, team:"Los Angeles Clippers",   name:"Bradley Beal",       espnId:6580 },
-  { rank:12, team:"Memphis Grizzlies",      name:"Jaren Jackson Jr",   espnId:4277961 },
-  { rank:13, team:"New Orleans Pelicans",   name:"Dejounte Murray",    espnId:3907497 },
-  { rank:14, team:"Orlando Magic",          name:"Cole Anthony",       espnId:4432809 },
-  { rank:15, team:"Philadelphia 76ers",     name:"Paul George",        espnId:4251 },
-  { rank:16, team:"Washington Wizards",     name:"Kyle Kuzma",         espnId:3134907 },
-  { rank:17, team:"Dallas Mavericks",       name:"Luka Doncic",        espnId:3945274 },
-  { rank:18, team:"Atlanta Hawks",          name:"Trae Young",         espnId:4277905 },
-  { rank:19, team:"Portland Trailblazers",  name:"Jrue Holiday",       espnId:3995 },
-  { rank:20, team:"Washington Wizards",     name:"Dangelo Russell",    espnId:3136776 },
-  { rank:21, team:"Charlotte Hornets",      name:"Miles Bridges",      espnId:4066383 },
-  { rank:22, team:"Indiana Pacers",         name:"Tyrese Haliburton",  espnId:4396993 },
-  { rank:23, team:"Toronto Raptors",        name:"Brandon Ingram",     espnId:3913176 },
-  { rank:24, team:"Phoenix Suns",           name:"Devin Booker",       espnId:3136193 },
-  { rank:25, team:"New York Knicks",        name:"Jordan Clarkson",    espnId:2528426 }
+  { rank:1,  team:"Los Angeles Lakers",      name:"LeBron James",       espnId:1966, nbaFollowers:89 },
+  { rank:2,  team:"Phoenix Suns",           name:"Kevin Durant",       espnId:3202, nbaFollowers:89 },
+  { rank:3,  team:"Boston Celtics",         name:"Jayson Tatum",       espnId:4065648, nbaFollowers:80 },
+  { rank:4,  team:"Dallas Mavericks",       name:"Kyrie Irving",       espnId:6472, nbaFollowers:80 },
+  { rank:5,  team:"Cleveland Cavaliers",    name:"Donovan Mitchell",   espnId:3908809, nbaFollowers:79 },
+  { rank:6,  team:"Milwaukee Bucks",        name:"Damian Lillard",     espnId:6606, nbaFollowers:78 },
+  { rank:7,  team:"Golden State Warriors",  name:"Stephen Curry",      espnId:3975, nbaFollowers:73 },
+  { rank:8,  team:"Golden State Warriors",  name:"Chris Paul",         espnId:2779, nbaFollowers:73 },
+  { rank:9,  team:"Los Angeles Clippers",   name:"Russell Westbrook",  espnId:3460, nbaFollowers:73 },
+  { rank:10, team:"New Orleans Pelicans",   name:"CJ McCollum",        espnId:2490149, nbaFollowers:67 },
+  { rank:11, team:"Los Angeles Clippers",   name:"Bradley Beal",       espnId:6580, nbaFollowers:64 },
+  { rank:12, team:"Memphis Grizzlies",      name:"Jaren Jackson Jr",   espnId:4277961, nbaFollowers:63 },
+  { rank:13, team:"New Orleans Pelicans",   name:"Dejounte Murray",    espnId:3907497, nbaFollowers:63 },
+  { rank:14, team:"Orlando Magic",          name:"Cole Anthony",       espnId:4432809, nbaFollowers:63 },
+  { rank:15, team:"Philadelphia 76ers",     name:"Paul George",        espnId:4251, nbaFollowers:63 },
+  { rank:16, team:"Washington Wizards",     name:"Kyle Kuzma",         espnId:3134907, nbaFollowers:62 },
+  { rank:17, team:"Dallas Mavericks",       name:"Luka Doncic",        espnId:3945274, nbaFollowers:61 },
+  { rank:18, team:"Atlanta Hawks",          name:"Trae Young",         espnId:4277905, nbaFollowers:60 },
+  { rank:19, team:"Portland Trailblazers",  name:"Jrue Holiday",       espnId:3995, nbaFollowers:59 },
+  { rank:20, team:"Washington Wizards",     name:"Dangelo Russell",    espnId:3136776, nbaFollowers:59 },
+  { rank:21, team:"Charlotte Hornets",      name:"Miles Bridges",      espnId:4066383, nbaFollowers:58 },
+  { rank:22, team:"Indiana Pacers",         name:"Tyrese Haliburton",  espnId:4396993, nbaFollowers:58 },
+  { rank:23, team:"Toronto Raptors",        name:"Brandon Ingram",     espnId:3913176, nbaFollowers:58 },
+  { rank:24, team:"Phoenix Suns",           name:"Devin Booker",       espnId:3136193, nbaFollowers:57 },
+  { rank:25, team:"New York Knicks",        name:"Jordan Clarkson",    espnId:2528426, nbaFollowers:57 }
 ];
 
 const FALLBACK =
@@ -265,10 +265,18 @@ function render(){
       team.className = "team";
       team.textContent = p.team.toUpperCase();
 
+      // NBA players following
+      const nbaFollowers = document.createElement("div");
+      nbaFollowers.style.marginTop = "6px";
+      nbaFollowers.style.fontSize = "12px";
+      nbaFollowers.style.fontWeight = "700";
+      nbaFollowers.textContent = `${p.nbaFollowers} NBA PLAYER FOLLOWERS`;
+
       card.appendChild(badge);
       card.appendChild(avatar);
       card.appendChild(name);
       card.appendChild(team);
+      card.appendChild(nbaFollowers);
 
       row.appendChild(card);
     }
@@ -280,4 +288,5 @@ function render(){
 render();
 </script>
 </body>
+</html>
 </html>
